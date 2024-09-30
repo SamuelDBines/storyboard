@@ -1,0 +1,5 @@
+.text-field-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--md-padding);
+}

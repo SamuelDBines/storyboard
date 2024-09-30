@@ -1,0 +1,7 @@
+.register-card {
+  background-color: #ffffff;
+  width: 300px; /* Width of the card */
+  perspective: 1000px; /* Perspective to give the 3D effect */
+  margin: 16px;
+  margin-bottom: 100px;
+}

@@ -1,0 +1,91 @@
+.storyboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.storyboard-full-container {
+  display: flex;  
+  justify-content: space-between;
+} 
+
+.storyboard-header-container {
+  display: flex;  
+  align-items: center;
+  margin-bottom: 10px;
+} 
+
+.storyboard-header {
+  margin-right: var(--md-padding);
+}
+
+.button-action-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* storyboard.css */
+
+.flip-card {
+  background-color: transparent;
+  width: 300px; /* Width of the card */
+  perspective: 1000px; /* Perspective to give the 3D effect */
+  margin: 16px;
+  margin-bottom: 100px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s; /* Smooth flip transition */
+  transform-style: preserve-3d; /* Preserve 3D space for child elements */
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg); /* Flip 180 degrees on the Y-axis */
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden; /* Hide the back face when not visible */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Front face styling */
+.flip-card-front {
+  background-color: #ffffff; /* Light background for the front */
+  color: black;
+  padding: 20px;
+}
+
+/* Back face styling */
+.flip-card-back {
+  /* background-color: #2980b9; Different background color for the back */
+  color: white;
+  transform: rotateY(180deg); /* Position back face with 180deg rotation */
+  padding: 20px;
+}
+
+.flip-card button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  margin-top: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.flip-card button:hover {
+  background-color: #2980b9;
+}
+
