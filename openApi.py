@@ -19,7 +19,6 @@ def generate_storyboard_context(prompt: str):
         {"role": "user", "content": prompt}
       ]
     )
-
     # Return the completion message content
     return response
 

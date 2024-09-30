@@ -12,8 +12,10 @@ import UserContext, { IUser, initUser } from './context/user-context';
 import ViewProjects from './pages/view-projects/view-projects';
 import CreateStoryBoard from './pages/create-storyboards/create-storyboards';
 import Register from './pages/register/register';
+import Login from './pages/login/login';
 
 import App from './App';
+import { get } from './utils/fetch';
 
 const router = createBrowserRouter([
   {
@@ -21,12 +23,16 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
+        path: "",
+        element: <CreateStoryBoard />,
+      },
+      {
         path: "register",
         element: <Register />,
       },
       {
-        path: "",
-        element: <CreateStoryBoard />,
+        path: "login",
+        element: <Login />,
       },
       {
         path: "projects",
@@ -43,6 +49,17 @@ const root = ReactDOM.createRoot(
 
 const Index = () => {
   const [user, setUser] = React.useState<IUser>(initUser);
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setUser({ ...user, token });
+    }
+    get('/users/me').then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, []);
   return (<React.StrictMode>
     <UserContext.Provider value={{
       ...user,

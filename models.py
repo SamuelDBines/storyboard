@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, String, DateTime, func, ForeignKey, JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, relationship
-from passlib.context import CryptContext
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -10,8 +9,6 @@ DATABASE_URL = 'sqlite:///users.db'  # Example for SQLite; use a different URL f
 
 # Define the Base for models
 Base = declarative_base()
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class User(Base):
     __tablename__ = 'users'  # Table name in the database

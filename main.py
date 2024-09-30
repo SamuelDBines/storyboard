@@ -32,7 +32,6 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-
 def authenticate_user(db: Session, username: str, password: str):
     print(username, password)
     user = crud.get_user_by_username(db, username)
@@ -47,7 +46,7 @@ def authenticate_user(db: Session, username: str, password: str):
 def addPrefix(route):
     return prefix + route
 
-@app.get("/info")
+@app.get(addPrefix("/info"))
 async def info():
     return {
         "app_name": settings.env.app_name,
@@ -96,6 +95,13 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)
     # Create a new user
     return crud.create_user(db=db, user=user)
 
+@app.get(addPrefix("/users/me"), response_model=schemas.UserResponse)
+async def read_users_me(
+    current_user: Annotated[models.User, Depends(utils.get_current_active_user)],
+    db: Session = Depends(database.get_db)
+):
+    return current_user
+
 @app.get(addPrefix("/users/{user_id}"), response_model=schemas.UserResponse)
 def read_user(user_id: int, db: Session = Depends(database.get_db)):
     # Fetch the user by ID
@@ -104,19 +110,7 @@ def read_user(user_id: int, db: Session = Depends(database.get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-@app.get(addPrefix("/"))
-def read_root(token: Annotated[str, Depends(oauth2_scheme)]):
-    print(token)
-    return {"message": "Welcome to the Storyboard Generator API!"}
-
-@app.get("/users/me/", response_model=schemas.UserResponse)
-async def read_users_me(
-    current_user: Annotated[models.User, Depends(utils.get_current_active_user)],
-    db: Session = Depends(database.get_db)
-):
-    return current_user
-
-@app.post("/token")
+@app.post(addPrefix("/token"))
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     db: Session = Depends(database.get_db)
@@ -142,7 +136,6 @@ async def login_for_access_token(
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-
 
 # Define a request model for the storyboard prompt
 class StoryboardRequest(BaseModel):
